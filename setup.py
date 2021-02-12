@@ -1,4 +1,4 @@
-"""doncf setup script"""
+"""dconf setup script"""
 
 from setuptools import setup
 
