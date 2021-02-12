@@ -1,3 +1,3 @@
 """dconf top-level imports"""
 
-from dconf.core import initialize
+from dconf.api import initialize
