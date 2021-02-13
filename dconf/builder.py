@@ -3,7 +3,7 @@ import re
 from dataclasses import fields
 from typing import Dict, Type, TypeVar
 
-from .errors import InvalidConfiguration, UnknownConfiguration
+from .errors import InvalidConfigurationKey, UnknownConfigurationKey
 
 ConfigType = TypeVar("ConfigType")
 
@@ -18,12 +18,15 @@ class DataclassBuilder:
 
     def set(self, key: str, value: str) -> None:
         """Sets a value used to build the config instance"""
-        if not re.match(r"^(?P<key>[A-z]\w*)$", key):
-            raise InvalidConfiguration(key, value)
-        if key not in [field.name for field in fields(self._config_type)]:
-            raise UnknownConfiguration(key)
+        self._validate(key)
         self._values[key] = value
 
     def build(self) -> ConfigType:
         """Builds a config instance"""
         return self._config_type(**self._values)  # type: ignore
+
+    def _validate(self, key: str) -> None:
+        if not re.match(r"^(?P<key>[A-z]\w*)$", key):
+            raise InvalidConfigurationKey(key)
+        if key not in [field.name for field in fields(self._config_type)]:
+            raise UnknownConfigurationKey(key)

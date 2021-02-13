@@ -1,14 +1,18 @@
 """dconf global error definitions"""
 
 
-class InvalidConfiguration(Exception):
+class ConfigurationException(Exception):
+    """Base exception for invalid configurations"""
+
+
+class InvalidConfigurationKey(ConfigurationException):
     """Exception for invalid configurations"""
 
-    def __init__(self, key: str, value: str):
-        super().__init__(f"invalid configuration: {key}={value}")
+    def __init__(self, key: str):
+        super().__init__(f"invalid configuration key: {key}")
 
 
-class UnknownConfiguration(Exception):
+class UnknownConfigurationKey(ConfigurationException):
     """Exception for unknown configurations"""
 
     def __init__(self, key: str):

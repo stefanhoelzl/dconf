@@ -18,7 +18,7 @@ class TestDataclassBuilder:
 
     def test_unkown_key(self) -> None:
         builder = DataclassBuilder(make_config())
-        with pytest.raises(dconf.errors.UnknownConfiguration):
+        with pytest.raises(dconf.errors.UnknownConfigurationKey):
             builder.set("unkown_key", "value")
 
     @pytest.mark.parametrize(
@@ -31,5 +31,5 @@ class TestDataclassBuilder:
     )
     def test_invalid_keys(self, key: str) -> None:
         builder = DataclassBuilder(make_config())
-        with pytest.raises(dconf.errors.InvalidConfiguration):
+        with pytest.raises(dconf.errors.InvalidConfigurationKey):
             builder.set(key, "value")
